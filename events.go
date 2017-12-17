@@ -16,7 +16,10 @@
 
 package gitlab
 
-import "time"
+import (
+	"time"
+	"fmt"
+)
 
 // PushEvent represents a push event.
 //
@@ -33,7 +36,7 @@ type PushEvent struct {
 	UserEmail   string `json:"user_email"`
 	UserAvatar  string `json:"user_avatar"`
 	ProjectID   int    `json:"project_id"`
-	Project     struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -50,12 +53,12 @@ type PushEvent struct {
 		Visibility        VisibilityValue `json:"visibility"`
 	} `json:"project"`
 	Repository *Repository `json:"repository"`
-	Commits    []*struct {
+	Commits []*struct {
 		ID        string     `json:"id"`
 		Message   string     `json:"message"`
 		Timestamp *time.Time `json:"timestamp"`
 		URL       string     `json:"url"`
-		Author    struct {
+		Author struct {
 			Name  string `json:"name"`
 			Email string `json:"email"`
 		} `json:"author"`
@@ -80,7 +83,7 @@ type TagEvent struct {
 	UserName    string `json:"user_name"`
 	UserAvatar  string `json:"user_avatar"`
 	ProjectID   int    `json:"project_id"`
-	Project     struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -97,12 +100,12 @@ type TagEvent struct {
 		Visibility        VisibilityValue `json:"visibility"`
 	} `json:"project"`
 	Repository *Repository `json:"repository"`
-	Commits    []*struct {
+	Commits []*struct {
 		ID        string     `json:"id"`
 		Message   string     `json:"message"`
 		Timestamp *time.Time `json:"timestamp"`
 		URL       string     `json:"url"`
-		Author    struct {
+		Author struct {
 			Name  string `json:"name"`
 			Email string `json:"email"`
 		} `json:"author"`
@@ -120,7 +123,7 @@ type TagEvent struct {
 type IssueEvent struct {
 	ObjectKind string `json:"object_kind"`
 	User       *User  `json:"user"`
-	Project    struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -136,7 +139,7 @@ type IssueEvent struct {
 		WebURL            string          `json:"web_url"`
 		Visibility        VisibilityValue `json:"visibility"`
 	} `json:"project"`
-	Repository       *Repository `json:"repository"`
+	Repository *Repository `json:"repository"`
 	ObjectAttributes struct {
 		ID          int    `json:"id"`
 		Title       string `json:"title"`
@@ -169,7 +172,7 @@ type CommitCommentEvent struct {
 	ObjectKind string `json:"object_kind"`
 	User       *User  `json:"user"`
 	ProjectID  int    `json:"project_id"`
-	Project    struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -185,7 +188,7 @@ type CommitCommentEvent struct {
 		WebURL            string          `json:"web_url"`
 		Visibility        VisibilityValue `json:"visibility"`
 	} `json:"project"`
-	Repository       *Repository `json:"repository"`
+	Repository *Repository `json:"repository"`
 	ObjectAttributes struct {
 		ID           int    `json:"id"`
 		Note         string `json:"note"`
@@ -199,7 +202,7 @@ type CommitCommentEvent struct {
 		CommitID     string `json:"commit_id"`
 		NoteableID   int    `json:"noteable_id"`
 		System       bool   `json:"system"`
-		StDiff       struct {
+		StDiff struct {
 			Diff        string `json:"diff"`
 			NewPath     string `json:"new_path"`
 			OldPath     string `json:"old_path"`
@@ -215,7 +218,7 @@ type CommitCommentEvent struct {
 		Message   string     `json:"message"`
 		Timestamp *time.Time `json:"timestamp"`
 		URL       string     `json:"url"`
-		Author    struct {
+		Author struct {
 			Name  string `json:"name"`
 			Email string `json:"email"`
 		} `json:"author"`
@@ -230,7 +233,7 @@ type MergeCommentEvent struct {
 	ObjectKind string `json:"object_kind"`
 	User       *User  `json:"user"`
 	ProjectID  int    `json:"project_id"`
-	Project    struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -262,7 +265,7 @@ type MergeCommentEvent struct {
 		StDiff       *Diff  `json:"st_diff"`
 		URL          string `json:"url"`
 	} `json:"object_attributes"`
-	Repository   *Repository `json:"repository"`
+	Repository *Repository `json:"repository"`
 	MergeRequest struct {
 		ID              int    `json:"id"`
 		TargetBranch    string `json:"target_branch"`
@@ -283,7 +286,7 @@ type MergeCommentEvent struct {
 		LockedAt        string `json:"locked_at"`
 		UpdatedByID     int    `json:"updated_by_id"`
 		MergeError      string `json:"merge_error"`
-		MergeParams     struct {
+		MergeParams struct {
 			ForceRemoveSourceBranch string `json:"force_remove_source_branch"`
 		} `json:"merge_params"`
 		MergeWhenPipelineSucceeds bool        `json:"merge_when_pipeline_succeeds"`
@@ -300,12 +303,12 @@ type MergeCommentEvent struct {
 		LastEditedByID            int         `json:"last_edited_by_id"`
 		Source                    *Repository `json:"source"`
 		Target                    *Repository `json:"target"`
-		LastCommit                struct {
+		LastCommit struct {
 			ID        string     `json:"id"`
 			Message   string     `json:"message"`
 			Timestamp *time.Time `json:"timestamp"`
 			URL       string     `json:"url"`
-			Author    struct {
+			Author struct {
 				Name  string `json:"name"`
 				Email string `json:"email"`
 			} `json:"author"`
@@ -323,7 +326,7 @@ type IssueCommentEvent struct {
 	ObjectKind string `json:"object_kind"`
 	User       *User  `json:"user"`
 	ProjectID  int    `json:"project_id"`
-	Project    struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -339,7 +342,7 @@ type IssueCommentEvent struct {
 		WebURL            string          `json:"web_url"`
 		Visibility        VisibilityValue `json:"visibility"`
 	} `json:"project"`
-	Repository       *Repository `json:"repository"`
+	Repository *Repository `json:"repository"`
 	ObjectAttributes struct {
 		ID           int     `json:"id"`
 		Note         string  `json:"note"`
@@ -367,7 +370,7 @@ type SnippetCommentEvent struct {
 	ObjectKind string `json:"object_kind"`
 	User       *User  `json:"user"`
 	ProjectID  int    `json:"project_id"`
-	Project    struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -383,7 +386,7 @@ type SnippetCommentEvent struct {
 		WebURL            string          `json:"web_url"`
 		Visibility        VisibilityValue `json:"visibility"`
 	} `json:"project"`
-	Repository       *Repository `json:"repository"`
+	Repository *Repository `json:"repository"`
 	ObjectAttributes struct {
 		ID           int    `json:"id"`
 		Note         string `json:"note"`
@@ -410,7 +413,7 @@ type SnippetCommentEvent struct {
 type MergeEvent struct {
 	ObjectKind string `json:"object_kind"`
 	User       *User  `json:"user"`
-	Project    struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -448,7 +451,7 @@ type MergeEvent struct {
 		LockedAt        string    `json:"locked_at"`
 		UpdatedByID     int       `json:"updated_by_id"`
 		MergeError      string    `json:"merge_error"`
-		MergeParams     struct {
+		MergeParams struct {
 			ForceRemoveSourceBranch string `json:"force_remove_source_branch"`
 		} `json:"merge_params"`
 		MergeWhenBuildSucceeds   bool        `json:"merge_when_build_succeeds"`
@@ -462,12 +465,12 @@ type MergeEvent struct {
 		TimeEstimate             int         `json:"time_estimate"`
 		Source                   *Repository `json:"source"`
 		Target                   *Repository `json:"target"`
-		LastCommit               struct {
+		LastCommit struct {
 			ID        string     `json:"id"`
 			Message   string     `json:"message"`
 			Timestamp *time.Time `json:"timestamp"`
 			URL       string     `json:"url"`
-			Author    struct {
+			Author struct {
 				Name  string `json:"name"`
 				Email string `json:"email"`
 			} `json:"author"`
@@ -475,14 +478,14 @@ type MergeEvent struct {
 		WorkInProgress bool   `json:"work_in_progress"`
 		URL            string `json:"url"`
 		Action         string `json:"action"`
-		Assignee       struct {
+		Assignee struct {
 			Name      string `json:"name"`
 			Username  string `json:"username"`
 			AvatarURL string `json:"avatar_url"`
 		} `json:"assignee"`
 	} `json:"object_attributes"`
 	Repository *Repository `json:"repository"`
-	Assignee   struct {
+	Assignee struct {
 		Name      string `json:"name"`
 		Username  string `json:"username"`
 		AvatarURL string `json:"avatar_url"`
@@ -496,7 +499,7 @@ type MergeEvent struct {
 type WikiPageEvent struct {
 	ObjectKind string `json:"object_kind"`
 	User       *User  `json:"user"`
-	Project    struct {
+	Project struct {
 		Name              string          `json:"name"`
 		Description       string          `json:"description"`
 		AvatarURL         string          `json:"avatar_url"`
@@ -535,7 +538,7 @@ type WikiPageEvent struct {
 // GitLab API docs:
 // https://docs.gitlab.com/ce/web_hooks/web_hooks.html#pipeline-events
 type PipelineEvent struct {
-	ObjectKind       string `json:"object_kind"`
+	ObjectKind string `json:"object_kind"`
 	ObjectAttributes struct {
 		ID         int      `json:"id"`
 		Ref        string   `json:"ref"`
@@ -574,7 +577,7 @@ type PipelineEvent struct {
 		Message   string     `json:"message"`
 		Timestamp *time.Time `json:"timestamp"`
 		URL       string     `json:"url"`
-		Author    struct {
+		Author struct {
 			Name  string `json:"name"`
 			Email string `json:"email"`
 		} `json:"author"`
@@ -589,7 +592,7 @@ type PipelineEvent struct {
 		FinishedAt string `json:"finished_at"`
 		When       string `json:"when"`
 		Manual     bool   `json:"manual"`
-		User       struct {
+		User struct {
 			Name      string `json:"name"`
 			Username  string `json:"username"`
 			AvatarURL string `json:"avatar_url"`
@@ -627,7 +630,7 @@ type BuildEvent struct {
 	BuildAllowFailure bool    `json:"build_allow_failure"`
 	ProjectID         int     `json:"project_id"`
 	ProjectName       string  `json:"project_name"`
-	User              struct {
+	User struct {
 		ID    int    `json:"id"`
 		Name  string `json:"name"`
 		Email string `json:"email"`
@@ -645,3 +648,106 @@ type BuildEvent struct {
 	} `json:"commit"`
 	Repository *Repository `json:"repository"`
 }
+
+type Event struct {
+	ProjectID   int         `json:"project_id"`
+	ActionName  string      `json:"action_name"`
+	TargetID    interface{} `json:"target_id"`
+	TargetIid   interface{} `json:"target_iid"`
+	TargetType  interface{} `json:"target_type"`
+	AuthorID    int         `json:"author_id"`
+	TargetTitle string      `json:"target_title"`
+	CreatedAt   time.Time   `json:"created_at"`
+	Author struct {
+		ID        int    `json:"id"`
+		Name      string `json:"name"`
+		Username  string `json:"username"`
+		State     string `json:"state"`
+		AvatarURL string `json:"avatar_url"`
+		WebURL    string `json:"web_url"`
+	} `json:"author"`
+	PushData struct {
+		CommitCount int    `json:"commit_count"`
+		Action      string `json:"action"`
+		RefType     string `json:"ref_type"`
+		CommitFrom  string `json:"commit_from"`
+		CommitTo    string `json:"commit_to"`
+		Ref         string `json:"ref"`
+		CommitTitle string `json:"commit_title"`
+	} `json:"push_data,omitempty"`
+	AuthorUsername string `json:"author_username"`
+	Note struct {
+		ID         int         `json:"id"`
+		Body       string      `json:"body"`
+		Attachment interface{} `json:"attachment"`
+		Author struct {
+			ID        int    `json:"id"`
+			Name      string `json:"name"`
+			Username  string `json:"username"`
+			State     string `json:"state"`
+			AvatarURL string `json:"avatar_url"`
+			WebURL    string `json:"web_url"`
+		} `json:"author"`
+		CreatedAt    time.Time `json:"created_at"`
+		UpdatedAt    time.Time `json:"updated_at"`
+		System       bool      `json:"system"`
+		NoteableID   int       `json:"noteable_id"`
+		NoteableType string    `json:"noteable_type"`
+		NoteableIid  int       `json:"noteable_iid"`
+	} `json:"note,omitempty"`
+}
+
+type ListEventsOptions struct {
+	ListOptions
+	Action      *string  `url:"action,omitempty" json:"action,omitempty"`
+	TargetTitle *string  `url:"target_title,omitempty" json:"target_title,omitempty"`
+	Before      *ISOTime `url:"before,omitempty" json:"before,omitempty"`
+	After       *ISOTime `url:"after,omitempty" json:"after,omitempty"`
+	Sort        *string  `url:"sort,omitempty" json:"sort,omitempty"`
+}
+
+type EventsService struct {
+	client *Client
+}
+
+// ListEvents gets a list of events.
+//
+// GitLab API docs: https://docs.gitlab.com/ce/api/events.html
+func (s *EventsService) ListEvents(opt *ListEventsOptions, options ...OptionFunc) ([]*Event, *Response, error) {
+	req, err := s.client.NewRequest("GET", "events", opt, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var event []*Event
+	resp, err := s.client.Do(req, &event)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return event, resp, err
+}
+
+// ListUserEvents gets a list of user events.
+//
+// GitLab API docs: https://docs.gitlab.com/ce/api/events.html#get-user-contribution-events
+func (s *EventsService) ListUserEvents(uid interface{}, opt *ListEventsOptions, options ...OptionFunc) ([]*Event, *Response, error) {
+	user, err := parseID(uid)
+	if err != nil {
+		return nil, nil, err
+	}
+	u := fmt.Sprintf("users/%s/events", user)
+	req, err := s.client.NewRequest("GET", u, opt, options)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var events []*Event
+	resp, err := s.client.Do(req, &events)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return events, resp, err
+}
+

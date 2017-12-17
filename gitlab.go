@@ -137,7 +137,7 @@ func (l *NotificationLevelValue) UnmarshalJSON(data []byte) error {
 
 // List of valid notification levels.
 const (
-	DisabledNotificationLevel NotificationLevelValue = iota
+	DisabledNotificationLevel      NotificationLevelValue = iota
 	ParticipatingNotificationLevel
 	WatchNotificationLevel
 	GlobalNotificationLevel
@@ -175,6 +175,34 @@ const (
 	PrivateVisibility  VisibilityValue = "private"
 	InternalVisibility VisibilityValue = "internal"
 	PublicVisibility   VisibilityValue = "public"
+)
+
+type EventTypeValue string
+
+const (
+	CreatedEventType   EventTypeValue = "created"
+	UpdatedEventType   EventTypeValue = "updated"
+	ClosedEventType    EventTypeValue = "closed"
+	ReopenedEventType  EventTypeValue = "reopened"
+	PushedEventType    EventTypeValue = "pushed"
+	CommentedEventType EventTypeValue = "commented"
+	MergedEventType    EventTypeValue = "merged"
+	JoinedEventType    EventTypeValue = "joined"
+	LeftEventType      EventTypeValue = "left"
+	DestroyedEventType EventTypeValue = "destroyed"
+	ExpiredEventType   EventTypeValue = "expired"
+)
+
+type EventTargetTypeValue string
+
+const (
+	IssueEventTargetType        EventTargetTypeValue = "issue"
+	MilestoneEventTargetType    EventTargetTypeValue = "milestone"
+	MergeRequestEventTargetType EventTargetTypeValue = "merge_request"
+	NoteEventTargetType         EventTargetTypeValue = "note"
+	ProjectEventTargetType      EventTargetTypeValue = "project"
+	SnippetEventTargetType      EventTargetTypeValue = "snippet"
+	UserEventTargetType         EventTargetTypeValue = "user"
 )
 
 // A Client manages communication with the GitLab API.
@@ -230,6 +258,7 @@ type Client struct {
 	Users                *UsersService
 	Version              *VersionService
 	Wikis                *WikisService
+	Events               *EventsService
 }
 
 // ListOptions specifies the optional parameters to various List methods that
@@ -304,6 +333,7 @@ func newClient(httpClient *http.Client, tokenType tokenType, token string) *Clie
 	c.Users = &UsersService{client: c}
 	c.Version = &VersionService{client: c}
 	c.Wikis = &WikisService{client: c}
+	c.Events = &EventsService{client: c}
 
 	return c
 }
@@ -436,7 +466,7 @@ func (r *Response) populatePageValues() {
 			}
 
 			// try to pull out page parameter
-			url, err := url.Parse(segments[0][1 : len(segments[0])-1])
+			url, err := url.Parse(segments[0][1: len(segments[0])-1])
 			if err != nil {
 				continue
 			}
