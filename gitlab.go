@@ -694,7 +694,7 @@ func Visibility(v VisibilityValue) *VisibilityValue {
 
 // EvenType is a helper routine that allocates a new EventTypeValue
 // to store v and returns a pointer to it.
-func EvenType(v EventTypeValue) *EventTypeValue {
+func EventType(v EventTypeValue) *EventTypeValue {
 	p := new(EventTypeValue)
 	*p = v
 	return p
