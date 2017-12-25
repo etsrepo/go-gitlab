@@ -699,11 +699,11 @@ type Event struct {
 
 type ListEventsOptions struct {
 	ListOptions
-	Action      *string  `url:"action,omitempty" json:"action,omitempty"`
-	TargetTitle *string  `url:"target_title,omitempty" json:"target_title,omitempty"`
-	Before      *ISOTime `url:"before,omitempty" json:"before,omitempty"`
-	After       *ISOTime `url:"after,omitempty" json:"after,omitempty"`
-	Sort        *string  `url:"sort,omitempty" json:"sort,omitempty"`
+	Action      *EventTypeValue       `url:"action,omitempty" json:"action,omitempty"`
+	TargetTitle *EventTargetTypeValue `url:"target_title,omitempty" json:"target_title,omitempty"`
+	Before      *string               `url:"before,omitempty" json:"before,omitempty"`
+	After       *string               `url:"after,omitempty" json:"after,omitempty"`
+	Sort        *string               `url:"sort,omitempty" json:"sort,omitempty"`
 }
 
 type EventsService struct {
